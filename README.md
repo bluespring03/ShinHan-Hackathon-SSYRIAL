@@ -84,7 +84,7 @@
 
 <div align="right"><a href="#tableContents">목차로 이동</a></div>
 
-그림
+![System Architecture Diagram](docs/SSYRIAL%20System%20Architecture.jpg)
 
 <br/>
 
