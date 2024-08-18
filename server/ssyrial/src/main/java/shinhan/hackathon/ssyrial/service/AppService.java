@@ -5,6 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import shinhan.hackathon.ssyrial.model.IssuedApiKeyModel;
 
+/**
+ * AppService 클래스는 비즈니스 로직을 처리하는 서비스 클래스입니다.
+ * 
+ * IssuedApiKeyModel 관련 API 통신을 담당합니다.
+ */
 @Service
 public class AppService extends ShinhanApiService {
 
@@ -12,6 +17,12 @@ public class AppService extends ShinhanApiService {
     super(restTemplate);
   }
 
+  /**
+   * API 키 발급 요청을 처리하는 메서드입니다.
+   * 
+   * @param request IssuedApiKeyModel.Request - API 키 발급 요청 데이터
+   * @return IssuedApiKeyModel.Response - 발급된 API 키 응답 데이터
+   */
   public IssuedApiKeyModel.Response getIssuedApiKey(IssuedApiKeyModel.Request request) {
     return sendRequest("/app/issuedApiKey", HttpMethod.POST, request, IssuedApiKeyModel.Response.class);
   }
