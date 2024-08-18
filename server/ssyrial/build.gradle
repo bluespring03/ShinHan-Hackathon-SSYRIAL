@@ -46,3 +46,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// 개발 환경에서만 DevTools 활성화
+bootRun {
+    systemProperty 'spring.profiles.active', 'dev'
+}
