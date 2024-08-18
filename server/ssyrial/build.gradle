@@ -17,6 +17,13 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    all {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
 dependencies {
     // Spring Boot 핵심 라이브러리 (API 서버 구축)
     implementation 'org.springframework.boot:spring-boot-starter' // Spring Boot의 핵심 기능 제공
@@ -24,6 +31,7 @@ dependencies {
 
     // 모니터링 및 관리
     implementation 'org.springframework.boot:spring-boot-starter-actuator' // 애플리케이션 모니터링 및 관리 엔드포인트 제공
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2' // SLF4J + Log4j2 로깅 사용
 
     // API 문서화
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0' // OpenAPI 문서 자동 생성 및 Swagger UI 제공
