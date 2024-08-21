@@ -23,7 +23,7 @@
 1. <a href="#systemArchitecture">⚙ 시스템 아키텍쳐</a>
 1. <a href="#skills">🛠️ 기술 스택</a>
 1. <a href="#erd">💾 ERD</a>
-1. <a href="#developers">👥 팀원 소개</a>
+
 
 <br/>
 
