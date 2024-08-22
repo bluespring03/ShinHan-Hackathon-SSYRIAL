@@ -4,6 +4,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import shinhan.hackathon.ssyrial.model.IssuedApiKeyModel;
+import shinhan.hackathon.ssyrial.model.ReIssuedApiKeyModel;
 
 /**
  * AppService 클래스는 비즈니스 로직을 처리하는 서비스 클래스입니다.
@@ -25,5 +26,9 @@ public class AppService extends ShinhanApiService {
    */
   public IssuedApiKeyModel.Response getIssuedApiKey(IssuedApiKeyModel.Request request) {
     return sendRequest("/app/issuedApiKey", HttpMethod.POST, request, IssuedApiKeyModel.Response.class);
+  }
+
+  public ReIssuedApiKeyModel.Response getReIssuedApiKey(ReIssuedApiKeyModel.Request request) {
+    return sendRequest("/app/reIssuedApiKey", HttpMethod.POST, request, ReIssuedApiKeyModel.Response.class);
   }
 }

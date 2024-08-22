@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import shinhan.hackathon.ssyrial.model.ApiResponse;
 import shinhan.hackathon.ssyrial.model.IssuedApiKeyModel;
+import shinhan.hackathon.ssyrial.model.ReIssuedApiKeyModel;
 import shinhan.hackathon.ssyrial.service.AppService;
 
 /**
@@ -29,6 +30,13 @@ public class AppController {
   public ResponseEntity<ApiResponse<IssuedApiKeyModel.Response>> getApiKey(
       @RequestBody IssuedApiKeyModel.Request request) {
     IssuedApiKeyModel.Response response = appService.getIssuedApiKey(request);
+    return ResponseEntity.ok(ApiResponse.success(response));
+  }
+
+  @PostMapping("/getReApiKey")
+  public ResponseEntity<ApiResponse<ReIssuedApiKeyModel.Response>> getReApiKey(
+      @RequestBody ReIssuedApiKeyModel.Request request) {
+    ReIssuedApiKeyModel.Response response = appService.getReIssuedApiKey(request);
     return ResponseEntity.ok(ApiResponse.success(response));
   }
 }
