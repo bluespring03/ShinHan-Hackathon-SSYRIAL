@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssyrial/screens/account/tranfer/account_transfer_start_screen.dart';
 import 'package:ssyrial/screens/guide/stt_screen.dart';
 import 'package:ssyrial/widgets/custom_dialog.dart';
 
@@ -52,7 +53,15 @@ class FunctionSelectionScreen extends StatelessWidget {
               children: buttonLabels.map((label) {
                 return ElevatedButton(
                   onPressed: () {
-                    // 버튼 클릭 시 동작
+                    if (label == '돈 보내기') {
+                      // Navigate to SendMoneyScreen when "돈 보내기" is pressed
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AccountTransferStartScreen()),
+                      );
+                    } else {
+                      // Handle other buttons if needed
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: buttonColor, // 버튼 배경색 설정
