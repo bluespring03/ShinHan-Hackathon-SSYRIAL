@@ -20,6 +20,7 @@ public class AppController {
   private final AppService appService;
 
   /**
+   * test1
    * /getApiKey 엔드포인트로 API 키 발급 요청을 처리하는 메서드입니다.
    * 
    * @param request IssuedApiKeyModel.Request - API 키 발급 요청 데이터
