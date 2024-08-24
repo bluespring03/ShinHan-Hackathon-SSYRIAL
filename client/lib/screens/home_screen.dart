@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssyrial/screens/auth/help_screen.dart';
-import 'package:ssyrial/widgets/help_dialog.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   final String title; // 화면의 제목
@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               // 도움말 다이얼로그 표시
               showDialog(
                 context: context,
-                builder: (context) => HelpDialog(child: HelpScreen()),
+                builder: (context) => CustomDialog(child: HelpScreen()),
               );
             },
             style: ElevatedButton.styleFrom(

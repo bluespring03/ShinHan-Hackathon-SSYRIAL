@@ -63,9 +63,8 @@ flutter:
   uses-material-design: true
 
   # 애셋 설정 (Assets Configuration)
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
 
   # 커스텀 폰트 설정 (Custom Fonts Configuration)
   # fonts:

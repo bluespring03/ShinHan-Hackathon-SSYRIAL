@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssyrial/screens/auth/login_screen.dart';
 import 'package:ssyrial/screens/auth/success_screen.dart';
-import 'package:ssyrial/widgets/help_dialog.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class SignupScreen extends StatelessWidget {
   final String questionText; // 질문 텍스트
@@ -48,7 +48,7 @@ class SignupScreen extends StatelessWidget {
                   Navigator.pop(context);
                   showDialog(
                     context: context,
-                    builder: (context) => HelpDialog(child: LoginScreen()),
+                    builder: (context) => CustomDialog(child: LoginScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -67,7 +67,7 @@ class SignupScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) =>
-                        HelpDialog(child: SuccessScreen(message: '회원가입 성공~~~~~~')),
+                        CustomDialog(child: SuccessScreen(message: '회원가입 성공~~~~~~')),
                   );
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssyrial/screens/auth/success_screen.dart';
-import 'package:ssyrial/widgets/help_dialog.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class LoginScreen extends StatelessWidget {
   final String titleText; // 제목 텍스트
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.pop(context);
                   showDialog(
                     context: context,
-                    builder: (context) => HelpDialog(
+                    builder: (context) => CustomDialog(
                         child: SuccessScreen(message: '비밀번호 로그인 성공~~')),
                   );
                 },
@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.pop(context);
                   showDialog(
                     context: context,
-                    builder: (context) => HelpDialog(
+                    builder: (context) => CustomDialog(
                         child: SuccessScreen(message: '인증서 로그인 성공~~')),
                   );
                 },

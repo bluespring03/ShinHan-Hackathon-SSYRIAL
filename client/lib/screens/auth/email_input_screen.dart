@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssyrial/screens/auth/signup_screen.dart';
-import 'package:ssyrial/widgets/help_dialog.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class EmailInputScreen extends StatefulWidget {
   final String title; // 화면의 제목
@@ -59,7 +59,7 @@ class _EmailInputScreenState extends State<EmailInputScreen> {
                 Navigator.pop(context);
                 showDialog(
                   context: context,
-                  builder: (context) => HelpDialog(child: SignupScreen()),
+                  builder: (context) => CustomDialog(child: SignupScreen()),
                 );
               } else {
                 // 이메일이 입력되지 않은 경우 오류 메시지 표시

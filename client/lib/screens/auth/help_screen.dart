@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssyrial/screens/auth/email_input_screen.dart';
-import 'package:ssyrial/widgets/help_dialog.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class HelpScreen extends StatelessWidget {
   final String questionText; // 질문 텍스트
@@ -26,6 +26,15 @@ class HelpScreen extends StatelessWidget {
     this.padding = const EdgeInsets.all(16.0), // 기본 패딩
   }) : super(key: key);
 
+  // 이미지를 빌드하는 함수
+  Widget buildImage() {
+    return Image.asset(
+      'assets/images/moli.gif', // 예시 이미지
+      width: 100,
+      height: 100,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,6 +42,7 @@ class HelpScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          buildImage(),
           Text(
             questionText, // 질문 텍스트
             style: questionTextStyle, // 질문 텍스트 스타일
@@ -60,7 +70,7 @@ class HelpScreen extends StatelessWidget {
                   Navigator.pop(context);
                   showDialog(
                     context: context,
-                    builder: (context) => HelpDialog(child: EmailInputScreen()),
+                    builder: (context) => CustomDialog(child: EmailInputScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

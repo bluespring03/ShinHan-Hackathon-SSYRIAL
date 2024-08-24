@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HelpDialog extends StatelessWidget {
+class CustomDialog extends StatelessWidget {
   final Widget child; // 다이얼로그 안에 표시될 위젯
   final double borderRadius; // 다이얼로그 모서리의 둥글기
   final double dialogWidthFactor; // 다이얼로그 너비 비율 (화면 대비)
@@ -13,7 +13,7 @@ class HelpDialog extends StatelessWidget {
   final Color closeIconColor; // 닫기 아이콘의 색상
   final EdgeInsetsGeometry closeIconPadding; // 닫기 아이콘 주위의 패딩
 
-  const HelpDialog({
+  const CustomDialog({
     super.key,
     required this.child, // 필수로 제공되어야 하는 자식 위젯
     this.borderRadius = 20.0, // 모서리 둥글기 기본값

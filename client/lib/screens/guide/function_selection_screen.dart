@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ssyrial/screens/guide/voice_input_popup.dart';
+import 'package:ssyrial/screens/guide/stt_screen.dart';
+import 'package:ssyrial/widgets/custom_dialog.dart';
 
 class FunctionSelectionScreen extends StatelessWidget {
   final String title; // 화면 제목
@@ -78,7 +79,7 @@ class FunctionSelectionScreen extends StatelessWidget {
                 // 마이크 아이콘 클릭 시 동작
                 showDialog(
                   context: context,
-                  builder: (context) => VoiceInputPopup(),
+                  builder: (context) => CustomDialog(child: STTScreen()),
                 );
               },
             ),
