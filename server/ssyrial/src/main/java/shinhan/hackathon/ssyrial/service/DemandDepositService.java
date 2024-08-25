@@ -95,7 +95,6 @@ public class DemandDepositService extends ShinhanApiService {
     CreateDemandDepositAccountModel.Request request = CreateDemandDepositAccountModel.Request.builder()
         .Header(header)
         .accountTypeUniqueNo(accountTypeUniqueNo)
-        .userKey(userKey)
         .build();
 
     // API 요청 보내기
