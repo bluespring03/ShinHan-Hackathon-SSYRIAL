@@ -1,24 +1,66 @@
-/*
- * 2.4.1 상품 등록 (p.28)
- * 
- * 설명
- * 은행별 수시입출금 상품을 등록
- * 
- * Request
- * Header - 공통 - 타입X - 길이X - 필수Y - userKey 제외
- * bankCode - 은행코드 - String - 길이3 - 필수Y
- * accountName - 상품명 - String - 길이20 - 필수Y
- * accountDescription - 상품설명 - String - 길이255 - 필수N
- * 
- * Response
- * Header - 공통 - 타입X - 길이X - 필수Y
- * REC - 등록된 상품 정보 - List - 길이X - 필수 Y
- * accountTypeUniqueNo - 상품 고유번호 - String - 길이20 - 필수Y
- * bankCode - 은행코드 - String - 길이3 - 필수Y
- * bankName - 은행명 - String - 길이20 - 필수Y
- * accountTypeCode - 상품구분코드 - String - 길이3 - 필수Y - 1:수시입출금, 2:정기예금, 3:정기적금, 4:대출
- * accountTypeName - 상품구분명 - String - 길이20 - 필수Y
- * accountName - 상품명 - String - 길이20 - 필수Y
- * accountDescription - 상품설명 - String - 길이255 - 필수N
- * accountType - 통화 - String - 길이255 - 필수Y - DOMESTIC:원화, OVERSEAS:외화
+package shinhan.hackathon.ssyrial.model.demandDeposit;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
+
+/**
+ * CreateDemandDepositModel 클래스는 정기 입출금 상품 등록 요청 및 응답 데이터를 담는 모델 클래스입니다.
  */
+public class CreateDemandDepositModel {
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Request {
+
+    @JsonProperty("Header")
+    private CommonHeaderModel.Request header;
+
+    @NotBlank(message = "은행 코드는 필수 입력 항목입니다.")
+    @Size(min = 3, max = 3, message = "은행 코드는 3자리여야 합니다.")
+    private String bankCode;
+
+    @NotBlank(message = "상품 이름은 필수 입력 항목입니다.")
+    @Size(max = 20, message = "상품 이름은 최대 20자까지 허용됩니다.")
+    private String accountName;
+
+    @Size(max = 255, message = "상품 설명은 최대 255자까지 허용됩니다.")
+    private String accountDescription;
+  }
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Response {
+
+    @JsonProperty("Header")
+    private CommonHeaderModel.Response header;
+
+    @JsonProperty("REC")
+    private ProductInfo rec;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ProductInfo {
+      private String accountTypeUniqueNo;
+      private String bankCode;
+      private String bankName;
+      private String accountTypeCode;
+      private String accountTypeName;
+      private String accountName;
+      private String accountDescription;
+      private String accountType;
+    }
+  }
+}
