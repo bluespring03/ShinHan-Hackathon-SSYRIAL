@@ -7,9 +7,8 @@ import shinhan.hackathon.ssyrial.model.bank.InquireBankCodes;
 import shinhan.hackathon.ssyrial.service.BankService;
 
 /**
- * BankController 클래스는 /api/bank 경로로 들어오는 REST API 요청을 처리하는 컨트롤러입니다.
- * 
- * 이 컨트롤러는 은행 코드 조회 요청을 처리하는 엔드포인트를 제공합니다.
+ * BankController 클래스는 은행 코드 조회 API 요청을 처리하는 REST 컨트롤러입니다.
+ * /api/bank 경로로 들어오는 요청을 처리하며, 은행 코드 조회 API에 대한 요청을 처리합니다.
  */
 @RestController
 @RequestMapping("/api/bank")
@@ -18,26 +17,28 @@ public class BankController {
   private final BankService bankService;
 
   /**
-   * BankController의 생성자. BankService를 주입받습니다.
-   * 
-   * @param bankService 은행 코드 조회 관련 비즈니스 로직을 처리하는 서비스 클래스
+   * BankController 생성자
+   * BankService 인스턴스를 주입받아 사용합니다.
+   *
+   * @param bankService - 은행 코드 조회 관련 비즈니스 로직을 처리하는 서비스
    */
   public BankController(BankService bankService) {
     this.bankService = bankService;
   }
 
   /**
-   * /inquireBankCodes 엔드포인트로 들어오는 은행 코드 조회 요청을 처리합니다.
-   * 
-   * 이 메서드는 클라이언트로부터 별도의 요청 본문 없이 은행 코드 조회 요청을 받아서 처리한 후,
-   * 조회된 은행 코드 정보를 반환합니다.
-   * 
-   * @return ResponseEntity<ApiResponse<InquireBankCodes.Response>> - 조회된 은행 코드
-   *         정보가 담긴 응답
+   * /inquireBankCodes 엔드포인트에 대한 POST 요청을 처리하는 메서드입니다.
+   * 은행 코드 조회 API를 호출하고, 그 결과를 클라이언트에게 응답으로 반환합니다.
+   *
+   * @return ResponseEntity<ApiResponse<InquireBankCodes.Response>> - 은행 코드 조회 응답
+   *         데이터를 담은 ApiResponse를 반환합니다.
    */
   @PostMapping("/inquireBankCodes")
   public ResponseEntity<ApiResponse<InquireBankCodes.Response>> inquireBankCodes() {
+    // 은행 코드 조회 서비스 호출
     InquireBankCodes.Response response = bankService.inquireBankCodes();
+
+    // 응답을 성공 상태로 반환
     return ResponseEntity.ok(ApiResponse.success(response));
   }
 }

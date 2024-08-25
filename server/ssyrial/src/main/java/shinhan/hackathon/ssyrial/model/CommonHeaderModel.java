@@ -109,6 +109,7 @@ public class CommonHeaderModel {
     private String transmissionTime;
     private String institutionCode;
     private String fintechAppNo;
+    private String apiKey;
     private String apiServiceCode;
     private String institutionTransactionUniqueNo;
   }

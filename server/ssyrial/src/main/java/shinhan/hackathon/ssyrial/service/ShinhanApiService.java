@@ -89,19 +89,25 @@ public abstract class ShinhanApiService {
     HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
 
     try {
-      ResponseEntity<T> responseEntity = restTemplate.exchange(
+      ResponseEntity<String> responseEntity = restTemplate.exchange(
           BASE_URL + endpoint,
           method,
           entity,
-          responseType);
+          String.class);
 
-      return responseEntity.getBody();
+      String responseBody = responseEntity.getBody();
+      logger.info("Received response from Shinhan API: {}", responseBody);
+
+      // Convert the response body to the desired response type
+      ObjectMapper objectMapper = new ObjectMapper();
+      return objectMapper.readValue(responseBody, responseType);
+
     } catch (HttpClientErrorException e) {
       logger.error("Error calling Shinhan API: {}", e.getResponseBodyAsString());
       throw e;
     } catch (Exception e) {
-      logger.error("Unexpected error occurred: {}", e.getMessage());
-      throw e;
+      logger.error("Unexpected error occurred: {}", e.getMessage(), e);
+      throw new RuntimeException("Error processing Shinhan API response", e);
     }
   }
 

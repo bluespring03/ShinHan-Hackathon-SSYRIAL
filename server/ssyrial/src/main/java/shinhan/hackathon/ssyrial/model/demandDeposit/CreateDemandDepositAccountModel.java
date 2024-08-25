@@ -1,19 +1,73 @@
-/*
- * 2.4.3 계좌 생성 (p.34)
- * 
- * 설명
- * 계좌를 생성합니다. 상품을 조회한 사용자는 상품 고유번호를 통해 계좌를 생성할 수 있습니다.
- * 
- * Request
- * Header - 공통 - 타입X - 길이X - 필수Y
- * accountTypeUniqueNo - 상품 고유번호 - String - 길이20 - 필수Y
- * 
- * Response
- * Header - 공통 - 타입X - 길이X - 필수Y
- * REC - 계좌정보 - List - 길이X - 필수Y
- * bankCode - 은행코드 - String - 길이3 - 필수Y
- * accountNo - 계좌번호 - String - 길이16 - 필수Y
- * currency - 설명X - List - 길이X - 필수Y
- * currency - 통화코드 - String - 길이8 - 필수Y
- * currencyName - 통화명 - String - 길이16 - 필수Y
- */
+package shinhan.hackathon.ssyrial.model.demandDeposit;
+
+import lombok.Getter;
+import lombok.Setter;
+import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import jakarta.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class CreateDemandDepositAccountModel {
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Request {
+    @JsonProperty("Header")
+    private CommonHeaderModel.Request Header;
+
+    @NotBlank(message = "상품 고유번호는 필수 입력 항목입니다.")
+    private String accountTypeUniqueNo;
+
+    // 클라이언트로부터 받는 userKey를 위한 필드
+    @NotBlank(message = "사용자 키는 필수 입력 항목입니다.")
+    private String userKey;
+
+    // DemandDepositService에서 사용하는 생성자
+    public Request(CommonHeaderModel.Request header, String accountTypeUniqueNo) {
+      this.Header = header;
+      this.accountTypeUniqueNo = accountTypeUniqueNo;
+    }
+
+    // 클라이언트로부터 받은 데이터로 객체를 생성하는 생성자
+    public Request(String userKey, String accountTypeUniqueNo) {
+      this.userKey = userKey;
+      this.accountTypeUniqueNo = accountTypeUniqueNo;
+    }
+  }
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Response {
+    @JsonProperty("Header")
+    private CommonHeaderModel.Response Header;
+
+    @JsonProperty("REC")
+    private AccountInfo REC;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AccountInfo {
+      private String bankCode;
+      private String accountNo;
+      private CurrencyInfo currency;
+
+      @Getter
+      @Setter
+      @NoArgsConstructor
+      @AllArgsConstructor
+      public static class CurrencyInfo {
+        private String currency;
+        private String currencyName;
+      }
+    }
+  }
+}
