@@ -31,7 +31,7 @@ public class AppService extends ShinhanApiService {
    * @return IssuedApiKeyModel.Response - 발급된 API 키 정보 응답
    */
   public IssuedApiKeyModel.Response getIssuedApiKey(IssuedApiKeyModel.Request request) {
-    return sendRequest("/edu/app/issuedApiKey", HttpMethod.POST, request, IssuedApiKeyModel.Response.class);
+    return sendRequest("/edu/app/issuedApiKey", HttpMethod.POST, request, IssuedApiKeyModel.Response.class, false);
   }
 
   /**
@@ -41,6 +41,6 @@ public class AppService extends ShinhanApiService {
    * @return ReIssuedApiKeyModel.Response - 재발급된 API 키 정보 응답
    */
   public ReIssuedApiKeyModel.Response getReIssuedApiKey(ReIssuedApiKeyModel.Request request) {
-    return sendRequest("/edu/app/reIssuedApiKey", HttpMethod.POST, request, ReIssuedApiKeyModel.Response.class);
+    return sendRequest("/edu/app/reIssuedApiKey", HttpMethod.POST, request, ReIssuedApiKeyModel.Response.class, false);
   }
 }

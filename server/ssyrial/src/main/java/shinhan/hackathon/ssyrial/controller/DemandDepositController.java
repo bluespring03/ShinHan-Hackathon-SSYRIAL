@@ -1,7 +1,5 @@
 package shinhan.hackathon.ssyrial.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shinhan.hackathon.ssyrial.model.ApiResponse;
@@ -10,48 +8,58 @@ import shinhan.hackathon.ssyrial.model.demandDeposit.InquireDemandDepositListMod
 import shinhan.hackathon.ssyrial.service.DemandDepositService;
 
 /**
- * DemandDepositController 클래스는 수시입출금 상품 관련 API 요청을 처리하는 컨트롤러 클래스입니다.
+ * DemandDepositController 클래스는 수시입출금 상품 관련 요청을 처리하는 컨트롤러입니다.
+ *
+ * 이 클래스는 수시입출금 상품 관련 기능에 대한 엔드포인트를 제공합니다.
+ * - /api/demandDeposit/inquireDemandDepositList: 수시입출금 상품 목록 조회 요청을 처리합니다.
+ * - /api/demandDeposit/createDemandDepositAccount: 수시입출금 계좌 생성 요청을 처리합니다.
+ *
  */
 @RestController
 @RequestMapping("/api/demandDeposit")
-public class DemandDepositController {
-
-  private static final Logger logger = LoggerFactory.getLogger(DemandDepositController.class);
+public class DemandDepositController extends BaseController {
 
   private final DemandDepositService demandDepositService;
 
+  /**
+   * DemandDepositController 생성자.
+   * 
+   * @param demandDepositService 수시입출금 상품 관련 비즈니스 로직을 처리하는 서비스 클래스
+   */
   public DemandDepositController(DemandDepositService demandDepositService) {
     this.demandDepositService = demandDepositService;
   }
 
   /**
-   * 수시입출금 상품 목록 조회 요청을 처리하는 엔드포인트입니다.
+   * /inquireDemandDepositList 엔드포인트로 들어오는 수시입출금 상품 목록 조회 요청을 처리합니다.
+   * 
+   * 이 메서드는 클라이언트로부터 수시입출금 상품 목록 조회 요청을 받아서 처리한 후,
+   * 조회된 상품 목록 정보를 반환합니다.
+   *
+   * @return ResponseEntity<ApiResponse<InquireDemandDepositListModel.Response>> -
+   *         상품 목록 정보가 담긴 응답
    */
   @PostMapping("/inquireDemandDepositList")
   public ResponseEntity<ApiResponse<InquireDemandDepositListModel.Response>> inquireDemandDepositList() {
-    logger.info("Received request for inquireDemandDepositList");
-
     InquireDemandDepositListModel.Response response = demandDepositService.inquireDemandDepositList();
-
-    logger.info("Responding with data: {}", response);
-
-    return ResponseEntity.ok(ApiResponse.success(response));
+    return successResponse(response);
   }
 
   /**
-   * 계좌 생성 요청을 처리하는 엔드포인트입니다.
+   * /createDemandDepositAccount 엔드포인트로 들어오는 수시입출금 계좌 생성 요청을 처리합니다.
+   * 
+   * 이 메서드는 클라이언트로부터 수시입출금 계좌 생성 요청을 받아서 처리한 후,
+   * 생성된 계좌 정보를 반환합니다.
+   *
+   * @param request CreateDemandDepositAccountModel.Request - 계좌 생성 요청 데이터
+   * @return ResponseEntity<ApiResponse<CreateDemandDepositAccountModel.Response>>
+   *         - 생성된 계좌 정보가 담긴 응답
    */
   @PostMapping("/createDemandDepositAccount")
   public ResponseEntity<ApiResponse<CreateDemandDepositAccountModel.Response>> createDemandDepositAccount(
       @RequestBody CreateDemandDepositAccountModel.Request request) {
-    logger.info("Received request to createDemandDepositAccount with userKey: {} and accountTypeUniqueNo: {}",
-        request.getUserKey(), request.getAccountTypeUniqueNo());
-
     CreateDemandDepositAccountModel.Response response = demandDepositService.createDemandDepositAccount(
         request.getUserKey(), request.getAccountTypeUniqueNo());
-
-    logger.info("Responding with created account data: {}", response);
-
-    return ResponseEntity.ok(ApiResponse.success(response));
+    return successResponse(response);
   }
 }

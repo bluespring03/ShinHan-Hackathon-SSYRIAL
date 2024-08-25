@@ -42,4 +42,9 @@ public class ApiResponse<T> {
   public static <T> ApiResponse<T> error(String message) {
     return new ApiResponse<>(false, message, null);
   }
+
+  // 새로운 오류 응답 메서드 (메시지 + 추가 데이터)
+  public static <T> ApiResponse<T> error(String message, T data) {
+    return new ApiResponse<>(false, message, data);
+  }
 }

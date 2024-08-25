@@ -62,6 +62,7 @@ public class CommonHeaderModel {
     @Size(max = 40, message = "API 키는 최대 40자까지 허용됩니다.")
     private String apiKey;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Size(max = 40, message = "사용자 키는 최대 40자까지 허용됩니다.")
     private String userKey;
 

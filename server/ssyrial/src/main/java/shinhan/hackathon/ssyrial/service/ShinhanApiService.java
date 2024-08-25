@@ -34,39 +34,25 @@ public abstract class ShinhanApiService {
     this.apiKey = apiKey;
   }
 
+  /**
+   * 공통 헤더를 생성하는 메서드입니다.
+   * 
+   * @param apiName        API 이름
+   * @param apiServiceCode API 서비스 코드
+   * @param userKey        사용자 키 (선택 사항)
+   * @return 공통 헤더 모델
+   */
   protected CommonHeaderModel.Request createCommonHeader(String apiName, String apiServiceCode, String userKey) {
-    CommonHeaderModel.Request.RequestBuilder headerBuilder = CommonHeaderModel.Request.builder()
+    return CommonHeaderModel.Request.builder()
         .apiName(apiName)
         .apiServiceCode(apiServiceCode)
-        .apiKey(apiKey);
-
-    if (userKey != null) {
-      headerBuilder.userKey(userKey);
-    }
-
-    return headerBuilder.build();
+        .apiKey(apiKey)
+        .userKey(userKey)
+        .build();
   }
 
   /**
    * 외부 API에 요청을 보내고 응답을 받는 메서드입니다.
-   * 
-   * 이 메서드는 API 키를 포함하지 않는 요청에 사용됩니다.
-   * 
-   * @param <T>          응답 데이터의 타입
-   * @param endpoint     호출할 API 엔드포인트
-   * @param method       HTTP 메서드 (GET, POST 등)
-   * @param requestBody  요청 데이터
-   * @param responseType 응답 데이터의 클래스 타입
-   * @return T - 응답 데이터
-   */
-  protected <T> T sendRequest(String endpoint, HttpMethod method, Object requestBody, Class<T> responseType) {
-    return sendRequest(endpoint, method, requestBody, responseType, false);
-  }
-
-  /**
-   * 외부 API에 요청을 보내고 응답을 받는 메서드입니다.
-   * 
-   * 이 메서드는 API 키가 필요한 요청에 사용됩니다.
    * 
    * @param <T>          응답 데이터의 타입
    * @param endpoint     호출할 API 엔드포인트
