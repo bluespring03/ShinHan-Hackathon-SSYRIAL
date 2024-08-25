@@ -14,9 +14,10 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
+
 /**
  * ShinhanApiService 클래스는 외부 API와의 통신을 처리하는 추상화된 서비스 클래스입니다.
- * 
  * RestTemplate을 사용하여 API 요청을 보냅니다.
  */
 @Service
@@ -26,11 +27,24 @@ public abstract class ShinhanApiService {
 
   protected final RestTemplate restTemplate;
   protected static final String BASE_URL = "https://finopenapi.ssafy.io/ssafy/api/v1";
-  private final String apiKey;
+  protected final String apiKey;
 
   public ShinhanApiService(RestTemplate restTemplate, String apiKey) {
     this.restTemplate = restTemplate;
     this.apiKey = apiKey;
+  }
+
+  protected CommonHeaderModel.Request createCommonHeader(String apiName, String apiServiceCode, String userKey) {
+    CommonHeaderModel.Request.RequestBuilder headerBuilder = CommonHeaderModel.Request.builder()
+        .apiName(apiName)
+        .apiServiceCode(apiServiceCode)
+        .apiKey(apiKey);
+
+    if (userKey != null) {
+      headerBuilder.userKey(userKey);
+    }
+
+    return headerBuilder.build();
   }
 
   /**

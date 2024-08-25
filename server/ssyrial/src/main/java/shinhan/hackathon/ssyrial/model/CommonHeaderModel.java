@@ -1,35 +1,100 @@
-/*
-2.3.1 공통 HEADER API (p.18)
+package shinhan.hackathon.ssyrial.model;
 
-설명
-API 요청/응답시, BODY에 공통으로 사용하는 데이터
-BODY 안에 HEADER라는 키로 들어가며, 공통부를 포함하여 API들이 요청, 응답값을 전송한다.
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-Request
-*기관거래고유번호
-새로운 번호로 임의 채번 (YYYYMMDD + HHMMSS + 일련번호 6자리) 또는 20자리의 난수
-API 요청시 사용자가 항상 새로운 번호로 임의 채번해야함.
-(예 : 2024021609000000000, 2024021609000000001)
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicLong;
 
-apiName - API이름 - String - 길이30 - 필수Y - 호출API URI의 마지막 path명 ex) ssafy/api/v1/edu/account/inquireBankAccountTypes 호출 uri일 경우 => inquireBankAccountTypes
-transmissionDate - 전송일자 - String - 길이8 - 필수Y - API 전송일자(YYYYMMDD) 요청일
-transmissionTime - 전송시각 - String - 길이6 - 필수Y - API 전송시각(HHMMSS) 요청시간 기준 +-5분
-institutionCode - 기관코드 - String - 길이5 - 필수Y - '00100'로 고정
-fintechAppNo - 핀테크 앱 일련번호 - String - 길이3 - 필수Y - '001'로 고정
-apiServiceCode - API서비스코드 - String - 길이30 - 필수Y - API 이름 필드와 동일
-institutionTransactionUniqueNo - 기관거래고유번호 - String - 길이20 - 필수Y - 기관별 API 서비스 호출 단위의 고유 코드
-apiKey - API KEY - String - 길이40 - 필수Y - 앱 관리자(개발자)가 발급받은 API KEY
-userKey - USER KEY - String - 길이40 - 필수Y - 앱 사용자가 회원가입할때 발급받은 USER KEY
+public class CommonHeaderModel {
 
+  private static final AtomicLong sequence = new AtomicLong(0);
 
-Response
-responseCode - 응답코드 - String - 길이X - 필수Y - H0000
-responseMessage - 응답메세지 - String - 길이X - 필수Y - 정상처리 되었습니다.
-apiName - API이름 - String - 길이30 - 필수Y - 호출 API URI 뒷부분 ex) /ssafy/api/v1/edu/demandDeposit/createDemandDeposit 호출 uri일 경우 => createDemandDeposit
-transmissionDate - 전송일자 - String - 길이8 - 필수Y - API 전송일자(YYYYMMDD) 요청일
-transmissionTime - 전송시각 - String - 길이6 - 필수Y - API 전송시각(HHMMSS) 요청시간 기준 +-5분
-institutionCode - 기관코드 - String - 길이5 - 필수Y - '00100'로 고정
-fintechAppNo - 핀테크 앱 일련번호 - String - 길이3 - 필수Y - '001'로 고정
-apiServiceCode - API서비스코드 - String - 길이30 - 필수Y - API 이름 필드와 동일
-institutionTransactionUniqueNo - 기관거래고유번호 - String - 길이20 - 필수Y - 기관별 API 서비스 호출 단위의 고유 코드
-*/
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Request {
+
+    @NotBlank(message = "API 이름은 필수 입력 항목입니다.")
+    @Size(max = 30, message = "API 이름은 최대 30자까지 허용됩니다.")
+    private String apiName;
+
+    @NotBlank(message = "API 전송일자는 필수 입력 항목입니다.")
+    @Size(min = 8, max = 8, message = "API 전송일자는 YYYYMMDD 형식이어야 합니다.")
+    private String transmissionDate;
+
+    @NotBlank(message = "API 전송시각은 필수 입력 항목입니다.")
+    @Size(min = 6, max = 6, message = "API 전송시각은 HHMMSS 형식이어야 합니다.")
+    private String transmissionTime;
+
+    @NotBlank(message = "기관코드는 필수 입력 항목입니다.")
+    @Size(max = 5, message = "기관코드는 최대 5자까지 허용됩니다.")
+    private String institutionCode;
+
+    @NotBlank(message = "핀테크 앱 일련번호는 필수 입력 항목입니다.")
+    @Size(max = 3, message = "핀테크 앱 일련번호는 최대 3자까지 허용됩니다.")
+    private String fintechAppNo;
+
+    @NotBlank(message = "API 서비스 코드는 필수 입력 항목입니다.")
+    @Size(max = 30, message = "API 서비스 코드는 최대 30자까지 허용됩니다.")
+    private String apiServiceCode;
+
+    @NotBlank(message = "기관 거래 고유번호는 필수 입력 항목입니다.")
+    @Size(min = 20, max = 20, message = "기관 거래 고유번호는 20자리여야 합니다.")
+    private String institutionTransactionUniqueNo;
+
+    @NotBlank(message = "API 키는 필수 입력 항목입니다.")
+    @Size(max = 40, message = "API 키는 최대 40자까지 허용됩니다.")
+    private String apiKey;
+
+    @Size(max = 40, message = "사용자 키는 최대 40자까지 허용됩니다.")
+    private String userKey;
+
+    @Builder
+    public Request(String apiName, String apiServiceCode, String apiKey, String userKey) {
+      this.apiName = apiName;
+      this.apiServiceCode = apiServiceCode;
+      this.apiKey = apiKey;
+      this.userKey = userKey;
+
+      LocalDateTime now = LocalDateTime.now();
+      this.transmissionDate = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+      this.transmissionTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
+      this.institutionTransactionUniqueNo = generateUniqueTransactionNumber(now);
+      this.institutionCode = "00100";
+      this.fintechAppNo = "001";
+    }
+
+    private static String generateUniqueTransactionNumber(LocalDateTime now) {
+      String dateTime = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+      long sequenceNumber = sequence.getAndIncrement() % 1000000; // 6자리 순차 번호
+      return String.format("%s%06d", dateTime, sequenceNumber);
+    }
+  }
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Response {
+    private String responseCode;
+    private String responseMessage;
+    private String apiName;
+    private String transmissionDate;
+    private String transmissionTime;
+    private String institutionCode;
+    private String fintechAppNo;
+    private String apiServiceCode;
+    private String institutionTransactionUniqueNo;
+  }
+}

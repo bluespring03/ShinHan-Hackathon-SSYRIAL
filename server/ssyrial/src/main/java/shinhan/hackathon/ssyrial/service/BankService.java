@@ -1,7 +1,23 @@
-// Bank 경로 서비스
+package shinhan.hackathon.ssyrial.service;
 
-// /Bank/inqureBankCodes
-// 상품 등록시 필요한 은행코드를 조회
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
+import shinhan.hackathon.ssyrial.model.bank.InquireBankCodes;
 
-// /Bank/inqureBankCurrency
-// 상품 등록시 필요한 통화 코드를 조회
+@Service
+public class BankService extends ShinhanApiService {
+
+  public BankService(RestTemplate restTemplate, String apiKey) {
+    super(restTemplate, apiKey);
+  }
+
+  public InquireBankCodes.Response inquireBankCodes() {
+    CommonHeaderModel.Request header = createCommonHeader("inquireBankCodes", "inquireBankCodes", null);
+
+    InquireBankCodes.Request request = new InquireBankCodes.Request(header);
+
+    return sendRequest("/edu/bank/inquireBankCodes", HttpMethod.POST, request, InquireBankCodes.Response.class, true);
+  }
+}
