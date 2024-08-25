@@ -21,7 +21,7 @@ public abstract class ShinhanApiService {
   private static final Logger logger = LoggerFactory.getLogger(ShinhanApiService.class);
 
   protected final RestTemplate restTemplate;
-  protected static final String BASE_URL = "https://finopenapi.ssafy.io/ssafy/api/v1/edu";
+  protected static final String BASE_URL = "https://finopenapi.ssafy.io/ssafy/api/v1";
 
   public ShinhanApiService(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
