@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class InquireDemandDepositListModel {
   @Setter
   @NoArgsConstructor
   @AllArgsConstructor
+  @Builder
   public static class Request {
     @JsonProperty("Header")
     private CommonHeaderModel.Request Header;

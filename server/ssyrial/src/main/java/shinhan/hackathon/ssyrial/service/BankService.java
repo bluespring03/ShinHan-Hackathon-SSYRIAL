@@ -35,7 +35,9 @@ public class BankService extends ShinhanApiService {
     CommonHeaderModel.Request header = createCommonHeader("inquireBankCodes", "inquireBankCodes", null);
 
     // 은행 코드 조회 요청 데이터 생성
-    InquireBankCodes.Request request = new InquireBankCodes.Request(header);
+    InquireBankCodes.Request request = InquireBankCodes.Request.builder()
+        .Header(header)
+        .build();
 
     // API 호출 및 응답 반환
     return sendRequest("/edu/bank/inquireBankCodes", HttpMethod.POST, request, InquireBankCodes.Response.class, true);

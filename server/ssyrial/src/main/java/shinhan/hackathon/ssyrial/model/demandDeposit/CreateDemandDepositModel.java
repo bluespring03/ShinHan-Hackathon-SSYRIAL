@@ -3,6 +3,7 @@ package shinhan.hackathon.ssyrial.model.demandDeposit;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +20,7 @@ public class CreateDemandDepositModel {
   @Setter
   @NoArgsConstructor
   @AllArgsConstructor
+  @Builder
   public static class Request {
 
     @JsonProperty("Header")

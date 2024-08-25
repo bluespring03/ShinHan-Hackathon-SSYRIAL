@@ -42,8 +42,12 @@ public class DemandDepositService extends ShinhanApiService {
     CommonHeaderModel.Request header = createCommonHeader("createDemandDeposit", "createDemandDeposit", null);
 
     // 요청 객체 생성
-    CreateDemandDepositModel.Request request = new CreateDemandDepositModel.Request(header, bankCode, accountName,
-        accountDescription);
+    CreateDemandDepositModel.Request request = CreateDemandDepositModel.Request.builder()
+        .header(header)
+        .bankCode(bankCode)
+        .accountName(accountName)
+        .accountDescription(accountDescription)
+        .build();
 
     // API 요청 보내기
     return sendRequest("/edu/demandDeposit/createDemandDeposit", HttpMethod.POST, request,
@@ -63,7 +67,9 @@ public class DemandDepositService extends ShinhanApiService {
     CommonHeaderModel.Request header = createCommonHeader("inquireDemandDepositList", "inquireDemandDepositList", null);
 
     // 요청 객체 생성
-    InquireDemandDepositListModel.Request request = new InquireDemandDepositListModel.Request(header);
+    InquireDemandDepositListModel.Request request = InquireDemandDepositListModel.Request.builder()
+        .Header(header)
+        .build();
 
     // API 요청 보내기
     return sendRequest("/edu/demandDeposit/inquireDemandDepositList", HttpMethod.POST, request,
@@ -86,8 +92,11 @@ public class DemandDepositService extends ShinhanApiService {
         userKey);
 
     // 요청 객체 생성
-    CreateDemandDepositAccountModel.Request request = new CreateDemandDepositAccountModel.Request(header,
-        accountTypeUniqueNo);
+    CreateDemandDepositAccountModel.Request request = CreateDemandDepositAccountModel.Request.builder()
+        .Header(header)
+        .accountTypeUniqueNo(accountTypeUniqueNo)
+        .userKey(userKey)
+        .build();
 
     // API 요청 보내기
     return sendRequest("/edu/demandDeposit/createDemandDepositAccount", HttpMethod.POST, request,
