@@ -42,7 +42,7 @@ public class MemberModel {
   @AllArgsConstructor
   public static class Response {
     private String userId;
-    private String username;
+    private String userName;
     private String institutionCode;
     private String userKey;
     private String created;
