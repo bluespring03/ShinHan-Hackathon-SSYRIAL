@@ -13,10 +13,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * CommonHeaderModel 클래스는 API 요청/응답 시 공통으로 사용되는 헤더 데이터를 담는 모델 클래스입니다.
+ */
 public class CommonHeaderModel {
 
   private static final AtomicLong sequence = new AtomicLong(0);
 
+  /**
+   * 요청 데이터를 담는 내부 클래스입니다.
+   */
   @Getter
   @Setter
   @NoArgsConstructor
@@ -66,6 +72,7 @@ public class CommonHeaderModel {
       this.apiKey = apiKey;
       this.userKey = userKey;
 
+      // 자동 생성 필드 초기화
       LocalDateTime now = LocalDateTime.now();
       this.transmissionDate = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
       this.transmissionTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
@@ -74,6 +81,11 @@ public class CommonHeaderModel {
       this.fintechAppNo = "001";
     }
 
+    /**
+     * 고유한 기관 거래 고유번호를 생성하는 메서드입니다.
+     *
+     * @return 20자리의 고유한 번호
+     */
     private static String generateUniqueTransactionNumber(LocalDateTime now) {
       String dateTime = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
       long sequenceNumber = sequence.getAndIncrement() % 1000000; // 6자리 순차 번호
@@ -81,6 +93,9 @@ public class CommonHeaderModel {
     }
   }
 
+  /**
+   * 응답 데이터를 담는 내부 클래스입니다.
+   */
   @Getter
   @Setter
   @NoArgsConstructor
