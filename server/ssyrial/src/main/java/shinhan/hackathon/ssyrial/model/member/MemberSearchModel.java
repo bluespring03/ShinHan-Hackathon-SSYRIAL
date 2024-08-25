@@ -9,8 +9,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * MemberSearchModel 클래스는 사용자 검색 API 요청 및 응답 데이터를 담는 모델 클래스입니다.
+ */
 public class MemberSearchModel {
 
+  /**
+   * 사용자 검색 API 요청 데이터를 담는 내부 클래스입니다.
+   */
   @Getter
   @Setter
   @NoArgsConstructor
@@ -27,6 +33,9 @@ public class MemberSearchModel {
     private String userId;
   }
 
+  /**
+   * 사용자 검색 API 응답 데이터를 담는 내부 클래스입니다.
+   */
   @Getter
   @Setter
   @NoArgsConstructor

@@ -8,7 +8,9 @@ import shinhan.hackathon.ssyrial.model.api.ReIssuedApiKeyModel;
 import shinhan.hackathon.ssyrial.service.AppService;
 
 /**
- * AppController는 /api/app 경로에 대한 REST API 요청을 처리하는 컨트롤러입니다.
+ * AppController 클래스는 /api/app 경로로 들어오는 REST API 요청을 처리하는 컨트롤러입니다.
+ * 
+ * 이 컨트롤러는 API 키 발급 및 재발급 요청을 처리하는 엔드포인트를 제공합니다.
  */
 @RestController
 @RequestMapping("/api/app")
@@ -16,16 +18,24 @@ public class AppController {
 
   private final AppService appService;
 
+  /**
+   * AppController의 생성자. AppService를 주입받습니다.
+   * 
+   * @param appService API 키 관련 비즈니스 로직을 처리하는 서비스 클래스
+   */
   public AppController(AppService appService) {
     this.appService = appService;
   }
 
   /**
-   * /getApiKey 엔드포인트로 API 키 발급 요청을 처리하는 메서드입니다.
+   * /getApiKey 엔드포인트로 들어오는 API 키 발급 요청을 처리합니다.
+   * 
+   * 이 메서드는 클라이언트로부터 API 키 발급 요청 데이터를 받아서 처리한 후,
+   * 발급된 API 키 정보를 반환합니다.
    * 
    * @param request IssuedApiKeyModel.Request - API 키 발급 요청 데이터
    * @return ResponseEntity<ApiResponse<IssuedApiKeyModel.Response>> - 발급된 API 키
-   *         응답
+   *         정보가 담긴 응답
    */
   @PostMapping("/getApiKey")
   public ResponseEntity<ApiResponse<IssuedApiKeyModel.Response>> getApiKey(
@@ -35,11 +45,14 @@ public class AppController {
   }
 
   /**
-   * /getReApiKey 엔드포인트로 API 키 재발급 요청을 처리하는 메서드입니다.
+   * /getReApiKey 엔드포인트로 들어오는 API 키 재발급 요청을 처리합니다.
+   * 
+   * 이 메서드는 클라이언트로부터 API 키 재발급 요청 데이터를 받아서 처리한 후,
+   * 재발급된 API 키 정보를 반환합니다.
    * 
    * @param request ReIssuedApiKeyModel.Request - API 키 재발급 요청 데이터
    * @return ResponseEntity<ApiResponse<ReIssuedApiKeyModel.Response>> - 재발급된 API
-   *         키 응답
+   *         키 정보가 담긴 응답
    */
   @PostMapping("/getReApiKey")
   public ResponseEntity<ApiResponse<ReIssuedApiKeyModel.Response>> getReApiKey(
