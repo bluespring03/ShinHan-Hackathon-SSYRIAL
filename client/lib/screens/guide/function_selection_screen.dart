@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssyrial/screens/account/tranfer/account_transfer_start_screen.dart';
+import 'package:ssyrial/screens/account/tranfer/account_info_input_screen.dart';
 import 'package:ssyrial/screens/guide/stt_screen.dart';
 import 'package:ssyrial/widgets/custom_dialog.dart';
 
@@ -57,7 +57,7 @@ class FunctionSelectionScreen extends StatelessWidget {
                       // Navigate to SendMoneyScreen when "돈 보내기" is pressed
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AccountTransferStartScreen()),
+                        MaterialPageRoute(builder: (context) => AccountInfoInputScreen()),
                       );
                     } else {
                       // Handle other buttons if needed
