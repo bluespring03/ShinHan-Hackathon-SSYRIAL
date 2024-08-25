@@ -1,20 +1,65 @@
-/*
-2.4.2 상품 조회 (p.31)
+package shinhan.hackathon.ssyrial.model.demandDeposit;
 
-설명
-은행별 계좌 상품을 조회
+import lombok.Getter;
+import lombok.Setter;
+import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-Request
-Header - 공통 - 타입X - 길이X - 필수Y - userKey 제외
+import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 
-Response
-Header - 공통 - 타입X - 길이X - 필수Y
-REC - 은행별 상품 리스트 - List - 길이X - 필수Y
-accountTypeUniqueNo - 상품 고유번호 - String - 길이20 - 필수Y
-bankCode - 은행코드 - String - 길이20 - 필수Y
-bankName - 은행명 - String - 길이20 - 필수Y
-accountTypeCode - 상품구분코드 - String - 길이3 - 필수Y - 1:수시입출금, 2:정기예금, 3:정기적금, 4:대출
-accountName - 상품명 - String - 길이20 - 필수Y
-accountDescription - 상품설명 - String - 길이255 - 필수N
-accountType - 통화 - String - 길이255 - 필수Y - DOMESTIC:원화, OVERSEAS:외화
-*/
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * InquireDemandDepositListModel 클래스는 은행별 계좌 상품 조회 요청 및 응답 데이터를 담는 모델 클래스입니다.
+ */
+public class InquireDemandDepositListModel {
+
+  /**
+   * 은행별 계좌 상품 조회 요청 데이터를 담는 내부 클래스입니다.
+   */
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Request {
+
+    @NotBlank(message = "공통 헤더는 필수 입력 항목입니다.")
+    @JsonProperty("Header")
+    private CommonHeaderModel.Request Header;
+  }
+
+  /**
+   * 은행별 계좌 상품 조회 응답 데이터를 담는 내부 클래스입니다.
+   */
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Response {
+
+    @JsonProperty("Header")
+    private CommonHeaderModel.Response Header;
+
+    @JsonProperty("REC")
+    private List<DemandDepositProduct> REC;
+
+    /**
+     * 은행별 계좌 상품 데이터를 담는 내부 클래스입니다.
+     */
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DemandDepositProduct {
+      private String accountTypeUniqueNo;
+      private String bankCode;
+      private String bankName;
+      private String accountTypeCode;
+      private String accountName;
+      private String accountDescription;
+      private String accountType;
+    }
+  }
+}

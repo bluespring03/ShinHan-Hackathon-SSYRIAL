@@ -1,4 +1,3 @@
-package shinhan.hackathon.ssyrial.model.bank;
 /*
  * 2.4.1 상품 등록 (p.28)
  * 

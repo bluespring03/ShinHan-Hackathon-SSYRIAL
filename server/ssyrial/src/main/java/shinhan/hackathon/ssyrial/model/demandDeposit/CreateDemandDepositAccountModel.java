@@ -1,4 +1,3 @@
-package shinhan.hackathon.ssyrial.model.bank;
 /*
  * 2.4.3 계좌 생성 (p.34)
  * 
