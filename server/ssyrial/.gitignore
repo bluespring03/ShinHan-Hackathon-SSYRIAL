@@ -1,0 +1,76 @@
+### Help and Build ###
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS (Spring Tool Suite) ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Logs ###
+/logs/
+*.log
+*.gz
+
+### Environment Files ###
+.env
+
+### Firebase Service Account ###
+/src/main/resources/ssyrial-firebase-adminsdk.json
+
+### Docker ###
+Dockerfile
+docker-compose.yml
+/docker/
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Windows ###
+Thumbs.db
+ehthumbs.db
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+
+### Android Studio ###
+.gradle/
+.idea/
+*.iml
+*.apk
+*.dex
+/build/
