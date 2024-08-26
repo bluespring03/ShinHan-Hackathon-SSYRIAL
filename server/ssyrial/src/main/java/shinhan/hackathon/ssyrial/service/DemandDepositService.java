@@ -102,3 +102,8 @@ public class DemandDepositService extends ShinhanApiService {
         CreateDemandDepositAccountModel.Response.class, true);
   }
 }
+
+/*
+/demandDeposit/inquireDemandDepositAccountHolderName
+계좌에 대한 예금주 조회
+ */
