@@ -118,6 +118,4 @@ public class DemandDepositService extends ShinhanApiService {
 
 /demandDeposit/inquireTransactionHistory
 계좌 거래 내역 목록 조회 (단건)
-
-
  */
