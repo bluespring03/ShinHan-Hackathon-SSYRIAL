@@ -12,7 +12,7 @@ transactionMemo - 메모 - String - 길이255 - 필수N
 
 Response
 Header - 공통 - 타입X - 길이X - 필수Y
-REC - 설명X - ListX - 길이 - 필수Y
+REC - 설명X - List - 길이 - 필수Y
 memoUniqueNo - 메모 고유번호 - Long - 길이X
 accountNo - 계좌번호 - String - 길이16 - 필수Y
 transactionUniqueNo - 거래 고유번호 - Long - 길이X - 필수Y
