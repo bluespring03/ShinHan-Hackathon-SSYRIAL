@@ -18,132 +18,83 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('입력 팝업'),
+        title: Text('Main Screen'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return InputPopup();
-              },
-            );
+            _showKeypadDialog(context);
           },
-          child: Text('팝업 열기'),
+          child: Text('Show Keypad Dialog'),
         ),
       ),
     );
   }
+
+  void _showKeypadDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return HowMuchKeypadDialog();
+      },
+    );
+  }
 }
 
-class InputPopup extends StatefulWidget {
+class HowMuchKeypadDialog extends StatefulWidget {
   @override
-  _InputPopupState createState() => _InputPopupState();
+  _HowMuchKeypadDialogState createState() => _HowMuchKeypadDialogState();
 }
 
-class _InputPopupState extends State<InputPopup> {
-  String inputText = ''; // 박스1.텍스트 위젯에 표시될 문자열
-
-  void _addDigit(String digit) {
-    setState(() {
-      inputText += digit; // 입력한 숫자를 추가
-    });
-  }
-
-  void _clearText() {
-    setState(() {
-      inputText = ''; // 텍스트 위젯 클리어
-    });
-  }
-
-  void _deleteLastCharacter() {
-    setState(() {
-      if (inputText.isNotEmpty) {
-        inputText = inputText.substring(0, inputText.length - 1); // 마지막 글자 삭제
-      }
-    });
-  }
-
-  void _onCancel() {
-    Navigator.of(context).pop(); // 현재 팝업이 사라지게 함
-  }
-
-  void _onComplete() {
-    // 여기에 send_money_screen.dart의 미니박스2.텍스트위젯에 데이터를 입력하는 로직을 추가하세요
-    Navigator.of(context).pop(); // 팝업을 닫음
-  }
+class _HowMuchKeypadDialogState extends State<HowMuchKeypadDialog> {
+  // Controller for the amount input
+  final TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      title: Text('금액을 입력하세요'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 박스1 - 텍스트 위젯
+          // 2. Container1(회색) - 현재 입력된 금액
           Container(
-            padding: EdgeInsets.all(16),
-            child: Text(inputText, style: TextStyle(fontSize: 24)),
+            color: Colors.grey[200],
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              _amountController.text.isEmpty ? '0' : _amountController.text,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
-          SizedBox(height: 10),
-          // 박스2 - 버튼들
-          Column(
-            children: [
-              // row1
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNumberButton('1'),
-                  _buildNumberButton('2'),
-                  _buildNumberButton('3'),
-                ],
-              ),
-              // row2
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNumberButton('4'),
-                  _buildNumberButton('5'),
-                  _buildNumberButton('6'),
-                ],
-              ),
-              // row3
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNumberButton('7'),
-                  _buildNumberButton('8'),
-                  _buildNumberButton('9'),
-                ],
-              ),
-              // row4
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: _clearText,
-                    child: Text('모두 지우기'),
-                  ),
-                  _buildNumberButton('0'),
-                  ElevatedButton(
-                    onPressed: _deleteLastCharacter,
-                    child: Text('하나 지우기'),
-                  ),
-                ],
-              ),
-            ],
+          SizedBox(height: 20),
+
+          // 3. Container2 - 숫자 키패드
+          Container(
+            child: Column(
+              children: [
+                _buildKeypadRow(['1', '2', '3']),
+                _buildKeypadRow(['4', '5', '6']),
+                _buildKeypadRow(['7', '8', '9']),
+                _buildKeypadRow(['모두 지우기', '0', '하나 지우기']),
+              ],
+            ),
           ),
-          SizedBox(height: 10),
-          // 박스3 - 취소 및 완료 버튼
+          SizedBox(height: 20),
+
+          // 4. Container3 - 취소 및 완료 버튼
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                onPressed: _onCancel,
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // 현재 팝업 닫기
+                },
                 child: Text('취소'),
               ),
-              ElevatedButton(
-                onPressed: _onComplete,
+              TextButton(
+                onPressed: () {
+                  _handleCompletion(context);
+                },
                 child: Text('완료'),
               ),
             ],
@@ -153,11 +104,48 @@ class _InputPopupState extends State<InputPopup> {
     );
   }
 
-  // 숫자 버튼 생성 메서드
-  Widget _buildNumberButton(String number) {
-    return ElevatedButton(
-      onPressed: () => _addDigit(number),
-      child: Text(number),
+  // Build a row for the keypad
+  Widget _buildKeypadRow(List<String> keys) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: keys.map((key) {
+        return TextButton(
+          onPressed: () {
+            _handleKeypadInput(key);
+          },
+          child: Text(
+            key,
+            style: TextStyle(fontSize: 24),
+          ),
+        );
+      }).toList(),
     );
+  }
+
+  // Handle keypad input
+  void _handleKeypadInput(String key) {
+    setState(() {
+      if (key == '모두 지우기') {
+        _amountController.clear();
+      } else if (key == '하나 지우기') {
+        final currentText = _amountController.text;
+        if (currentText.isNotEmpty) {
+          _amountController.text = currentText.substring(0, currentText.length - 1);
+        }
+      } else {
+        _amountController.text += key;
+      }
+    });
+  }
+
+  // Handle the completion of input
+  void _handleCompletion(BuildContext context) {
+    final enteredAmount = _amountController.text;
+
+    // Here you might want to pass this amount to the main screen or other parts of your app
+    // For now, we'll just close the dialog
+    Navigator.of(context).pop(); // Close the dialog
+    Navigator.of(context).pop(); // Optionally close the previous screen or do other actions
+    // TODO: Pass enteredAmount to `send_money_screen.dart`'s mini box2 Text Widget
   }
 }
