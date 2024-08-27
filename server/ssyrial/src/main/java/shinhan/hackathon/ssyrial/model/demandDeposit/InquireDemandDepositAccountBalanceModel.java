@@ -20,7 +20,7 @@ lastTransactionDate - 최종거래일 - String - 길이8 - 필수N
 currency - 통화코드 - String - 길이8 - 필수Y
 */
 
-package shinhan.hackathon.ssyrial.model.accountBalance;
+package shinhan.hackathon.ssyrial.model.demandDeposit;
 
 import lombok.Getter;
 import lombok.Setter;
