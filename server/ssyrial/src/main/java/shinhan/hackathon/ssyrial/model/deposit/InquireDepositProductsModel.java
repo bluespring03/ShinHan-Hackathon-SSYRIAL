@@ -23,3 +23,94 @@ maxSubscriptionBalance - 최대 가입 가능금액 - Long - 길이X - 필수Y
 interestRate - 이자율 - double - 길이X - 필수Y
 rateDescription - 이자율 설명 - String - 길이255 - 필수N
 */
+
+package shinhan.hackathon.ssyrial.model.deposit;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * InquireDepositProductsModel 클래스는 예금 상품 목록 조회 요청 및 응답 데이터를 담는 모델 클래스입니다.
+ */
+public class InquireDepositProductsModel {
+
+    /**
+     * 예금 상품 목록 조회 요청 데이터를 담는 내부 클래스입니다.
+     */
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Request {
+        @JsonProperty("Header")
+        private CommonHeaderModel.Request Header;
+    }
+
+    /**
+     * 예금 상품 목록 조회 응답 데이터를 담는 내부 클래스입니다.
+     */
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Response {
+
+        @JsonProperty("Header")
+        private CommonHeaderModel.Response Header;
+
+        @JsonProperty("REC")
+        private List<DepositProduct> REC; // 예금 상품 목록
+
+        /**
+         * 예금 상품 데이터를 담는 내부 클래스입니다.
+         */
+        @Getter
+        @Setter
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class DepositProduct {
+            @JsonProperty("accountTypeUniqueNo")
+            private String accountTypeUniqueNo; // 필수: 상품 고유번호, 길이: 20
+
+            @JsonProperty("bankCode")
+            private String bankCode; // 필수: 은행코드, 길이: 3
+
+            @JsonProperty("bankName")
+            private String bankName; // 필수: 은행명, 길이: 20
+
+            @JsonProperty("accountTypeCode")
+            private String accountTypeCode; // 필수: 상품구분코드, 길이: 3
+
+            @JsonProperty("accountTypeName")
+            private String accountTypeName; // 필수: 상품구분명, 길이: 20
+
+            @JsonProperty("accountName")
+            private String accountName; // 필수: 상품명, 길이: 20
+
+            @JsonProperty("accountDescription")
+            private String accountDescription; // 선택: 상품설명, 길이: 255
+
+            @JsonProperty("subscriptionPeriod")
+            private String subscriptionPeriod; // 필수: 가입기간, 길이: 20
+
+            @JsonProperty("minSubscriptionBalance")
+            private Long minSubscriptionBalance; // 필수: 최소 가입 가능금액
+
+            @JsonProperty("maxSubscriptionBalance")
+            private Long maxSubscriptionBalance; // 필수: 최대 가입 가능금액
+
+            @JsonProperty("interestRate")
+            private Double interestRate; // 필수: 이자율
+
+            @JsonProperty("rateDescription")
+            private String rateDescription; // 선택: 이자율 설명, 길이: 255
+        }
+    }
+}
