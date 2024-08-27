@@ -23,7 +23,7 @@ transactionAfterBalance - 거래후잔액 - Long - 길이X - 필수Y
 transactionSummary - 거래 요약내용 - String - 길이255 - 필수N
 transactionMemo - 거래 메모 - String - 길이255 - 필수N
 */
-package shinhan.hackathon.ssyrial.model.singleTransactionHistory;
+package shinhan.hackathon.ssyrial.model.demandDeposit;
 
 import lombok.Getter;
 import lombok.Setter;
