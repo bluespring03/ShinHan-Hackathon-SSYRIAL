@@ -44,57 +44,85 @@ class FunctionSelectionScreen extends StatelessWidget {
           children: [
             Text(subtitle, style: subtitleTextStyle), // 설명 텍스트
             SizedBox(height: 20),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              childAspectRatio: 3,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              children: buttonLabels.map((label) {
-                return ElevatedButton(
-                  onPressed: () {
-                    if (label == '돈 보내기') {
-                      // Navigate to SendMoneyScreen when "돈 보내기" is pressed
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AccountInfoInputScreen()),
-                      );
-                    } else {
-                      // Handle other buttons if needed
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttonColor, // 버튼 배경색 설정
-                  ),
-                  child: Text(label, style: buttonTextStyle), // 버튼 텍스트 및 스타일 설정
-                );
-              }).toList(),
-            ),
+            _buildFunctionButtons(context), // 기능 버튼 위젯
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // "다른 기능 찾기" 버튼 클릭 시 동작
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: otherButtonColor, // "다른 기능 찾기" 버튼 배경색 설정
-              ),
-              child: Text(otherButtonText, style: buttonTextStyle), // 버튼 텍스트 및 스타일 설정
-            ),
+            _buildOtherFunctionButton(context), // "다른 기능 찾기" 버튼
             Spacer(),
-            Text('또는 버튼을 누르고 말해보세요'),
-            IconButton(
-              icon: Icon(micIcon), // 마이크 아이콘 설정
-              onPressed: () {
-                // 마이크 아이콘 클릭 시 동작
-                showDialog(
-                  context: context,
-                  builder: (context) => CustomDialog(child: STTScreen()),
-                );
-              },
-            ),
+            _buildMicInstructionAndIcon(context), // 마이크 사용 설명 및 아이콘
           ],
         ),
       ),
+    );
+  }
+}
+extension Widgets on FunctionSelectionScreen {
+  // 기능 버튼을 그리드 형태로 배치하는 위젯
+  Widget _buildFunctionButtons(context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      childAspectRatio: 3,
+      mainAxisSpacing: 16,
+      crossAxisSpacing: 16,
+      children: buttonLabels.map((label) {
+        return ElevatedButton(
+          onPressed: () => _onFunctionButtonPressed(label, context),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonColor, // 버튼 배경색 설정
+          ),
+          child: Text(label, style: buttonTextStyle), // 버튼 텍스트 및 스타일 설정
+        );
+      }).toList(),
+    );
+  }
+
+  // "다른 기능 찾기" 버튼 위젯
+  Widget _buildOtherFunctionButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // "다른 기능 찾기" 버튼 클릭 시 동작
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: otherButtonColor, // "다른 기능 찾기" 버튼 배경색 설정
+      ),
+      child: Text(otherButtonText, style: buttonTextStyle), // 버튼 텍스트 및 스타일 설정
+    );
+  }
+
+  // 마이크 사용 설명 텍스트 및 아이콘 위젯
+  Widget _buildMicInstructionAndIcon(BuildContext context) {
+    return Column(
+      children: [
+        Text('또는 버튼을 누르고 말해보세요'), // 설명 텍스트
+        IconButton(
+          icon: Icon(micIcon), // 마이크 아이콘 설정
+          onPressed: () {
+            _showSTTDialog(context); // 마이크 아이콘 클릭 시 STT 다이얼로그 호출
+          },
+        ),
+      ],
+    );
+  }
+}
+extension Functions on FunctionSelectionScreen {
+  // 기능 버튼이 눌렸을 때 동작
+  void _onFunctionButtonPressed(String label, BuildContext context) {
+    if (label == '돈 보내기') {
+      // "돈 보내기" 버튼 클릭 시 AccountInfoInputScreen으로 이동
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AccountInfoInputScreen()),
+      );
+    } else {
+      // 다른 기능에 대한 처리
+    }
+  }
+
+  // STT 다이얼로그 표시 함수
+  void _showSTTDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => CustomDialog(child: STTScreen()), // STT 화면을 포함한 다이얼로그 호출
     );
   }
 }
