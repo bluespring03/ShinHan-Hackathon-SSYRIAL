@@ -7,6 +7,11 @@ import shinhan.hackathon.ssyrial.model.CommonHeaderModel;
 import shinhan.hackathon.ssyrial.model.demandDeposit.CreateDemandDepositAccountModel;
 import shinhan.hackathon.ssyrial.model.demandDeposit.CreateDemandDepositModel;
 import shinhan.hackathon.ssyrial.model.demandDeposit.InquireDemandDepositListModel;
+import shinhan.hackathon.ssyrial.model.demandDeposit.InquireDemandDepositAccountHolderNameModel;
+import shinhan.hackathon.ssyrial.model.demandDeposit.InquireDemandDepositAccountBalanceModel;
+import shinhan.hackathon.ssyrial.model.demandDeposit.UpdateDemandDepositAccountTransferModel;
+import shinhan.hackathon.ssyrial.model.demandDeposit.InquireTransactionHistoryListModel;
+import shinhan.hackathon.ssyrial.model.demandDeposit.InquireTransactionHistoryModel;
 
 /**
  * DemandDepositService 클래스는 수시입출금 상품 관련 비즈니스 로직을 처리하는 서비스 클래스입니다.
@@ -50,7 +55,7 @@ public class DemandDepositService extends ShinhanApiService {
         .build();
 
     // API 요청 보내기
-    return sendRequest("/edu/demandDeposit/createDemandDeposit", HttpMethod.POST, request,
+    return sendRequest("/demandDeposit/createDemandDeposit", HttpMethod.POST, request,
         CreateDemandDepositModel.Response.class, true);
   }
 
@@ -72,7 +77,7 @@ public class DemandDepositService extends ShinhanApiService {
         .build();
 
     // API 요청 보내기
-    return sendRequest("/edu/demandDeposit/inquireDemandDepositList", HttpMethod.POST, request,
+    return sendRequest("/demandDeposit/inquireDemandDepositList", HttpMethod.POST, request,
         InquireDemandDepositListModel.Response.class, true);
   }
 
@@ -98,24 +103,149 @@ public class DemandDepositService extends ShinhanApiService {
         .build();
 
     // API 요청 보내기
-    return sendRequest("/edu/demandDeposit/createDemandDepositAccount", HttpMethod.POST, request,
+    return sendRequest("/demandDeposit/createDemandDepositAccount", HttpMethod.POST, request,
         CreateDemandDepositAccountModel.Response.class, true);
   }
+// ----------------------- 명석이가 만듦
+
+// ------------------------용현이가 만듦
+  /**
+   * 계좌에 대한 예금주를 조회하는 메서드입니다.
+   *
+   * 이 메서드는 계좌번호를 받아 예금주명을 조회하는 API 요청을 보냅니다.
+   *
+   * @param accountNo 계좌번호
+   * @return InquireDemandDepositAccountHolderNameModel.Response - 예금주 정보가 담긴 응답
+   */
+  public InquireDemandDepositAccountHolderNameModel.Response inquireDemandDepositAccountHolderName(String accountNo) {
+    // 공통 헤더 생성
+    CommonHeaderModel.Request header = createCommonHeader("inquireDemandDepositAccountHolderName", "inquireDemandDepositAccountHolderName", null);
+
+    // 요청 객체 생성
+    InquireDemandDepositAccountHolderNameModel.Request request = InquireDemandDepositAccountHolderNameModel.Request.builder()
+        .Header(header)
+        .accountNo(accountNo)
+        .build();
+
+    // API 요청 보내기
+    return sendRequest("/demandDeposit/inquireDemandDepositAccountHolderName", HttpMethod.POST, request,
+        InquireDemandDepositAccountHolderNameModel.Response.class, true);
+  }
+
+  /**
+   * 계좌 잔액을 조회하는 메서드입니다.
+   *
+   * 이 메서드는 계좌번호를 받아 계좌 잔액을 조회하는 API 요청을 보냅니다.
+   *
+   * @param accountNo 계좌번호
+   * @return InquireDemandDepositAccountBalanceModel.Response - 계좌 잔액 정보가 담긴 응답
+   */
+  public InquireDemandDepositAccountBalanceModel.Response inquireDemandDepositAccountBalance(String accountNo) {
+    // 공통 헤더 생성
+    CommonHeaderModel.Request header = createCommonHeader("inquireDemandDepositAccountBalance", "inquireDemandDepositAccountBalance", null);
+
+    // 요청 객체 생성
+    InquireDemandDepositAccountBalanceModel.Request request = InquireDemandDepositAccountBalanceModel.Request.builder()
+        .Header(header)
+        .accountNo(accountNo)
+        .build();
+
+    // API 요청 보내기
+    return sendRequest("/demandDeposit/inquireDemandDepositAccountBalance", HttpMethod.POST, request,
+        InquireDemandDepositAccountBalanceModel.Response.class, true);
+  }
+
+  /**
+   * 계좌 간 이체를 수행하는 메서드입니다.
+   *
+   * 이 메서드는 입금 계좌와 출금 계좌, 거래 금액 등을 받아 이체를 수행하는 API 요청을 보냅니다.
+   *
+   * @param depositAccountNo           입금 계좌번호
+   * @param withdrawalAccountNo        출금 계좌번호
+   * @param transactionBalance         거래금액
+   * @param depositTransactionSummary  입금 계좌에 대한 거래 요약 내용
+   * @param withdrawalTransactionSummary 출금 계좌에 대한 거래 요약 내용
+   * @return UpdateDemandDepositAccountTransferModel.Response - 이체 거래 정보가 담긴 응답
+   */
+  public UpdateDemandDepositAccountTransferModel.Response updateDemandDepositAccountTransfer(
+      String depositAccountNo, String withdrawalAccountNo, Long transactionBalance,
+      String depositTransactionSummary, String withdrawalTransactionSummary) {
+
+    // 공통 헤더 생성
+    CommonHeaderModel.Request header = createCommonHeader("updateDemandDepositAccountTransfer", "updateDemandDepositAccountTransfer", null);
+
+    // 요청 객체 생성
+    UpdateDemandDepositAccountTransferModel.Request request = UpdateDemandDepositAccountTransferModel.Request.builder()
+        .Header(header)
+        .depositAccountNo(depositAccountNo)
+        .withdrawalAccountNo(withdrawalAccountNo)
+        .transactionBalance(transactionBalance)
+        .depositTransactionSummary(depositTransactionSummary)
+        .withdrawalTransactionSummary(withdrawalTransactionSummary)
+        .build();
+
+    // API 요청 보내기
+    return sendRequest("/demandDeposit/updateDemandDepositAccountTransfer", HttpMethod.POST, request,
+        UpdateDemandDepositAccountTransferModel.Response.class, true);
+  }
+
+  /**
+   * 계좌 거래 내역 목록을 조회하는 메서드입니다.
+   *
+   * 이 메서드는 계좌번호, 조회 시작일자, 조회 종료일자 등을 받아 거래 내역 목록을 조회하는 API 요청을 보냅니다.
+   *
+   * @param accountNo      계좌번호
+   * @param startDate      조회 시작일자 (YYYYMMDD)
+   * @param endDate        조회 종료일자 (YYYYMMDD)
+   * @param transactionType 거래 구분 (M:입금, D:출금, A:전체)
+   * @param orderByType    정렬 순서 (ASC:오름차순, DESC:내림차순)
+   * @return InquireTransactionHistoryListModel.Response - 거래 내역 목록이 담긴 응답
+   */
+  public InquireTransactionHistoryListModel.Response inquireTransactionHistoryList(
+      String accountNo, String startDate, String endDate, String transactionType, String orderByType) {
+
+    // 공통 헤더 생성
+    CommonHeaderModel.Request header = createCommonHeader("inquireTransactionHistoryList", "inquireTransactionHistoryList", null);
+
+    // 요청 객체 생성
+    InquireTransactionHistoryListModel.Request request = InquireTransactionHistoryListModel.Request.builder()
+        .Header(header)
+        .accountNo(accountNo)
+        .startDate(startDate)
+        .endDate(endDate)
+        .transactionType(transactionType)
+        .orderByType(orderByType)
+        .build();
+
+    // API 요청 보내기
+    return sendRequest("/demandDeposit/inquireTransactionHistoryList", HttpMethod.POST, request,
+        InquireTransactionHistoryListModel.Response.class, true);
+  }
+
+  /**
+   * 계좌 거래 내역을 단건 조회하는 메서드입니다.
+   *
+   * 이 메서드는 계좌번호와 거래 고유번호를 받아 거래 내역을 단건 조회하는 API 요청을 보냅니다.
+   *
+   * @param accountNo          계좌번호
+   * @param transactionUniqueNo 거래 고유번호
+   * @return InquireTransactionHistoryModel.Response - 거래 내역이 담긴 응답
+   */
+  public InquireTransactionHistoryModel.Response inquireTransactionHistory(String accountNo,
+      Long transactionUniqueNo) {
+
+    // 공통 헤더 생성
+    CommonHeaderModel.Request header = createCommonHeader("inquireTransactionHistory", "inquireTransactionHistory", null);
+
+    // 요청 객체 생성
+    InquireTransactionHistoryModel.Request request = InquireTransactionHistoryModel.Request.builder()
+        .Header(header)
+        .accountNo(accountNo)
+        .transactionUniqueNo(transactionUniqueNo)
+        .build();
+
+    // API 요청 보내기
+    return sendRequest("/demandDeposit/inquireTransactionHistory", HttpMethod.POST, request,
+        InquireTransactionHistoryModel.Response.class, true);
+  }
 }
-
-/*
-/demandDeposit/inquireDemandDepositAccountHolderName
-계좌에 대한 예금주 조회
-
-/demandDeposit/inquireDemandDepositAccountBalance
-계좌 잔액 조회
-
-/demandDeposit/updateDemandDepositAccountTransfer
-계좌 이체
-
-/demandDeposit/inquireTransactionHistoryList
-계좌 거래 내역 목록 조회
-
-/demandDeposit/inquireTransactionHistory
-계좌 거래 내역 목록 조회 (단건)
- */
