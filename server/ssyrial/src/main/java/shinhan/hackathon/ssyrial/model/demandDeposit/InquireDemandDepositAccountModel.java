@@ -27,7 +27,7 @@
  * currency - 통화코드 - String - 길이8 - 필수Y
  */
 
-package shinhan.hackathon.ssyrial.model.singleAccount;
+package shinhan.hackathon.ssyrial.model.demandDeposit;
 
 import lombok.Getter;
 import lombok.Setter;
