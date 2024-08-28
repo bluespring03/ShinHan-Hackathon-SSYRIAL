@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Image.asset('assets/sol_bank_logo.png', height: 90),
+                  Image.asset('assets/images/sol_bank_logo.png', height: 90),
                   ElevatedButton(
                     child: Text('로그인'),
                     onPressed: () {},
