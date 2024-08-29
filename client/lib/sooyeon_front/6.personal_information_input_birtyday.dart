@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '1-2.cancle_member_registration.dart';  // 회원 등록 취소 화면 임포트
+import '7.personal_information_choose_gender.dart'; // 성별 선택 화면 임포트
 import 'package:flutter/services.dart';
 
 // PersonalInformationInputBirthday 클래스 정의
@@ -8,10 +10,12 @@ class PersonalInformationInputBirthday extends StatefulWidget {
   PersonalInformationInputBirthday({required this.initialName});
 
   @override
-  _PersonalInformationInputBirthdayState createState() => _PersonalInformationInputBirthdayState();
+  _PersonalInformationInputBirthdayState createState() =>
+      _PersonalInformationInputBirthdayState();
 }
 
-class _PersonalInformationInputBirthdayState extends State<PersonalInformationInputBirthday> {
+class _PersonalInformationInputBirthdayState
+    extends State<PersonalInformationInputBirthday> {
   TextEditingController _birthdayController = TextEditingController();
   late TextEditingController _nameController;
 
@@ -38,12 +42,17 @@ class _PersonalInformationInputBirthdayState extends State<PersonalInformationIn
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CancelMemberRegistrationScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 20),
               Text(
-                '생년월일을 입력해주세요.',
+                '6자리 생년월일을 입력해주세요.',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
@@ -62,7 +71,7 @@ class _PersonalInformationInputBirthdayState extends State<PersonalInformationIn
                     TextField(
                       controller: _birthdayController,
                       decoration: InputDecoration(
-                        hintText: '입력해 주세요.',
+                        hintText: 'oooooo',
                         border: InputBorder.none,
                         filled: true,
                         fillColor: Colors.white,
@@ -79,45 +88,25 @@ class _PersonalInformationInputBirthdayState extends State<PersonalInformationIn
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              // 이름 입력 컨테이너
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('이름'),
-                    SizedBox(height: 8),
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        hintText: '입력해 주세요.',
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
-              ),
               Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   child: Text('다음'),
-                  onPressed: (_birthdayController.text.length == 6 && _nameController.text.isNotEmpty)
+                  onPressed: (_birthdayController.text.length == 6 &&
+                      _nameController.text.isNotEmpty)
                       ? () {
                     print('생년월일: ${_birthdayController.text}');
-                    print('이름: ${_nameController.text}');
                     // 다음 화면으로 이동 로직
-                    Navigator.pushNamed(context, '/next_screen');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersonalInformationChooseGender(
+                          birthday: _birthdayController.text,
+                          initialName: _nameController.text,
+                        ),
+                      ),
+                    );
                   }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -141,7 +130,10 @@ class _PersonalInformationInputBirthdayState extends State<PersonalInformationIn
   }
 }
 
-// MyApp 클래스 정의
+void main() {
+  runApp(MyApp());
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -151,25 +143,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: PersonalInformationInputBirthday(initialName: '홍길동'), // 하드코딩된 이름을 전달
-      routes: {
-        '/next_screen': (context) => NextScreen(), // 다음 화면으로 이동할 때 사용할 라우트
-      },
     );
   }
-}
-
-// NextScreen 클래스 정의 (다음 화면 예시)
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Next Screen')),
-      body: Center(child: Text('This is the next screen!')),
-    );
-  }
-}
-
-// main 함수
-void main() {
-  runApp(MyApp());
 }
