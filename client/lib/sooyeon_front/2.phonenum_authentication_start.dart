@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '1-2.cancle_member_registration.dart'; // cancle_member_registration.dart 파일을 임포트
+import '3.personal_information_consent.dart'; // personal_information_consent.dart 파일을 임포트
 
-// PhoneNumAuthenticationStart 클래스 정의
 class PhoneNumAuthenticationStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class PhoneNumAuthenticationStart extends StatelessWidget {
                 TextButton(
                   child: Text('취소하기'),
                   onPressed: () {
-                    // 취소 로직 구현
-                    print('취소하기 버튼 클릭됨');
+                    // 취소하기 버튼 클릭 시 다이얼로그 표시
+                    showSignUpCancelDialog(context); // 다이얼로그 표시
                   },
                 ),
               ],
@@ -75,7 +76,6 @@ class PhoneNumAuthenticationStart extends StatelessWidget {
                 TextButton(
                   child: Text('보내기'),
                   onPressed: () {
-                    // 보내기 로직 구현
                     print('보내기 버튼 클릭됨');
                   },
                 ),
@@ -87,8 +87,13 @@ class PhoneNumAuthenticationStart extends StatelessWidget {
           TextButton(
             child: Text('다음'),
             onPressed: () {
-              // 다음 화면으로 이동 로직 구현
-              print('다음 버튼 클릭됨');
+              // 다음 버튼 클릭 시 personal_information_consent.dart로 화면 이동
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PersonalInformationConsent(), // 개인정보 동의 화면으로 이동
+                ),
+              );
             },
           ),
         ],
