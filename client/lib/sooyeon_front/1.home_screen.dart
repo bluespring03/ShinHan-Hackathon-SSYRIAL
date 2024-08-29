@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '2.sign_in_password.dart';
 
 void main() {
   runApp(MyApp());
@@ -62,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Image.asset('assets/images/sol_bank_logo.png', height: 90),
+                  Image.asset('assets/sol_bank_logo.png', height: 90),
                   ElevatedButton(
                     child: Text('로그인'),
                     onPressed: () {},
@@ -99,14 +100,23 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 2,
-                        child: Container(
-                          height: 100,
-                          color: Colors.green,
-                          child: Center(
-                            child: Text(
-                              '쉬운 화면\n실행하기',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
-                              textAlign: TextAlign.center,
+                        child: GestureDetector(
+                          onTap: () {
+                            // 버튼 클릭 시 SignInScreen 화면으로 이동
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignInScreen()),
+                            );
+                          },
+                          child: Container(
+                            height: 100,
+                            color: Colors.green,
+                            child: Center(
+                              child: Text(
+                                '쉬운 화면\n실행하기',
+                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
