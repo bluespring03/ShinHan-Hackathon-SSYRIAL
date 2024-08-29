@@ -12,15 +12,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fail Password Popup Demo'),
-        ),
-        body: Center(
-          child: ElevatedButton(
-            child: Text('Show Fail Popup'),
-            onPressed: () => showFailPasswordPopup(context),
-          ),
+      home: SignInScreen(), // 팝업에서 확인 버튼을 눌렀을 때 다시 SignInScreen으로 복귀
+    );
+  }
+}
+
+class SignInScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Fail Password Popup Demo'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Show Fail Popup'),
+          onPressed: () => showFailPasswordPopup(context),
         ),
       ),
     );
@@ -30,6 +37,7 @@ class MyApp extends StatelessWidget {
 void showFailPasswordPopup(BuildContext context) {
   showDialog(
     context: context,
+    barrierDismissible: false, // 팝업 외부 클릭으로 닫히지 않도록 설정
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -53,7 +61,7 @@ void showFailPasswordPopup(BuildContext context) {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
                 child: Text(
-                  'FAIL_POPUP',
+                  '비밀번호 오류',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -62,7 +70,7 @@ void showFailPasswordPopup(BuildContext context) {
                 ),
               ),
               Text(
-                '6자리 비밀번호를\n입력해주세요.',
+                '비밀번호가 틀렸습니다.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
@@ -84,16 +92,12 @@ void showFailPasswordPopup(BuildContext context) {
                   ),
                 ),
               ),
-              Text(
-                '비밀번호가 틀렸어요.',
-                style: TextStyle(fontSize: 16),
-              ),
               Row(
                 children: [
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(); // 팝업 닫기
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 15),
@@ -116,8 +120,8 @@ void showFailPasswordPopup(BuildContext context) {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
-                        // Add logic to retry password input
+                        Navigator.of(context).pop(); // 팝업 닫기
+                        showFailPasswordPopup(context); // 확인 버튼 클릭 시 다시 팝업 표시
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 15),
