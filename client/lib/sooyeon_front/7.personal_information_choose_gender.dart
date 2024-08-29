@@ -1,13 +1,21 @@
+// personal_information_choose_gender.dart
+
 import 'package:flutter/material.dart';
+import '1-2.cancle_member_registration.dart';
+import '8.authentication_start.dart'; // 인증 시작 화면을 임포트
 
 class PersonalInformationChooseGender extends StatefulWidget {
+  final String birthday;
+  final String initialName;
+
+  PersonalInformationChooseGender({required this.birthday, required this.initialName});
+
   @override
   _PersonalInformationChooseGenderState createState() => _PersonalInformationChooseGenderState();
 }
 
 class _PersonalInformationChooseGenderState extends State<PersonalInformationChooseGender> {
   String? selectedGender;
-  String birthday = '980229'; // 하드코딩된 생년월일
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +33,17 @@ class _PersonalInformationChooseGenderState extends State<PersonalInformationCho
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CancelMemberRegistrationScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 20),
               Text(
-                '맞는 성별을 눌러 주세요.',
+                '성별이 무엇입니까?',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
@@ -72,26 +85,6 @@ class _PersonalInformationChooseGenderState extends State<PersonalInformationCho
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              // 생년월일 표시 컨테이너
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('생년월일'),
-                    SizedBox(height: 8),
-                    Text(
-                      birthday,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
               Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -100,9 +93,15 @@ class _PersonalInformationChooseGenderState extends State<PersonalInformationCho
                   onPressed: selectedGender != null
                       ? () {
                     print('선택된 성별: $selectedGender');
-                    print('생년월일: $birthday');
-                    // 다음 화면으로 이동 로직
-                    Navigator.pushNamed(context, '/next_screen');
+                    print('생년월일: ${widget.birthday}');
+                    print('이름: ${widget.initialName}');
+                    // 다음 화면으로 이동 로직 (AuthenticationStart 화면으로)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AuthenticationStart(),
+                      ),
+                    );
                   }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -125,16 +124,6 @@ class _PersonalInformationChooseGenderState extends State<PersonalInformationCho
   }
 }
 
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Next Screen')),
-      body: Center(child: Text('This is the next screen!')),
-    );
-  }
-}
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -143,10 +132,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PersonalInformationChooseGender(), // 홈 화면을 PersonalInformationChooseGender로 설정
-      routes: {
-        '/next_screen': (context) => NextScreen(), // 다음 화면으로 이동할 때 사용할 라우트
-      },
+      home: PersonalInformationChooseGender(
+        birthday: '000303', // 하드코딩된 생년월일 예시
+        initialName: '박수연',
+      ),
     );
   }
 }
