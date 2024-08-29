@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import '5.personal_information_input_name.dart';  // 이름 입력 화면 임포트
+import '1-2.cancle_member_registration.dart';  // 회원 등록 취소 화면 임포트
 
-// PersonalInformationAllConsent 클래스 정의
 class PersonalInformationAllConsent extends StatefulWidget {
+  final bool isAllConsented;
+
+  PersonalInformationAllConsent({required this.isAllConsented});
+
   @override
-  _PersonalInformationAllConsentState createState() => _PersonalInformationAllConsentState();
+  _PersonalInformationAllConsentState createState() =>
+      _PersonalInformationAllConsentState();
 }
 
-class _PersonalInformationAllConsentState extends State<PersonalInformationAllConsent> {
-  bool isAllConsented = false;
+class _PersonalInformationAllConsentState
+    extends State<PersonalInformationAllConsent> {
+  late bool isAllConsented;
+
+  @override
+  void initState() {
+    super.initState();
+    isAllConsented = widget.isAllConsented;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +31,15 @@ class _PersonalInformationAllConsentState extends State<PersonalInformationAllCo
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 취소하기 버튼
               TextButton(
-                child: Text(
-                  '취소하기',
-                  style: TextStyle(color: Colors.grey),
-                ),
+                child: Text('취소하기', style: TextStyle(color: Colors.grey)),
                 onPressed: () {
-                  // 취소 화면으로 이동 로직
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CancelMemberRegistrationScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 20),
@@ -35,7 +48,6 @@ class _PersonalInformationAllConsentState extends State<PersonalInformationAllCo
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              // 전체 동의 버튼
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -45,7 +57,9 @@ class _PersonalInformationAllConsentState extends State<PersonalInformationAllCo
                   child: Row(
                     children: [
                       Icon(
-                        isAllConsented ? Icons.check_box : Icons.check_box_outline_blank,
+                        isAllConsented
+                            ? Icons.check_box
+                            : Icons.check_box_outline_blank,
                         color: isAllConsented ? Colors.blue : Colors.grey,
                       ),
                       SizedBox(width: 10),
@@ -56,21 +70,24 @@ class _PersonalInformationAllConsentState extends State<PersonalInformationAllCo
                     setState(() {
                       isAllConsented = !isAllConsented;
                     });
-                    // 개인정보 동의 내용 서버에 전송
                     _sendConsentToServer();
                   },
                 ),
               ),
               Spacer(),
-              // 다음 버튼
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   child: Text('다음'),
                   onPressed: isAllConsented
                       ? () {
-                    // 다음 화면으로 이동 로직
-                    Navigator.pushNamed(context, '/next_screen');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PersonalInformationInputName(),
+                      ),
+                    );
                   }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -87,46 +104,21 @@ class _PersonalInformationAllConsentState extends State<PersonalInformationAllCo
   }
 
   void _sendConsentToServer() {
-    // TODO: 서버에 동의 내용 전송 로직 구현
     print('개인정보 동의 내용 서버 전송: $isAllConsented');
   }
 }
 
-// MyApp 클래스 정의
+void main() {
+  runApp(MyApp());
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Personal Information Consent',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: PersonalInformationAllConsent(), // PersonalInformationAllConsent를 홈 화면으로 설정
-      // 정의된 경로에 따라 라우팅을 추가할 수 있습니다.
-      // 예를 들어, '/next_screen' 경로를 사용할 수 있도록 설정
-      routes: {
-        '/next_screen': (context) => NextScreen(), // NextScreen을 정의해 주세요.
-      },
+      title: 'Personal Information All Consent',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: PersonalInformationAllConsent(isAllConsented: false),
     );
   }
-}
-
-// Placeholder for the next screen
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Next Screen'),
-      ),
-      body: Center(
-        child: Text('다음 화면입니다!'),
-      ),
-    );
-  }
-}
-
-// main 함수
-void main() {
-  runApp(MyApp());
 }
