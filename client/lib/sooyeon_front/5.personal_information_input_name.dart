@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import '1-2.cancle_member_registration.dart';  // 회원 등록 취소 화면 임포트
+import '6.personal_information_input_birtyday.dart'; // 생년월일 입력 화면 임포트
 
 // PersonalInformationInputName 클래스 정의
 class PersonalInformationInputName extends StatefulWidget {
   @override
-  _PersonalInformationInputNameState createState() => _PersonalInformationInputNameState();
+  _PersonalInformationInputNameState createState() =>
+      _PersonalInformationInputNameState();
 }
 
-class _PersonalInformationInputNameState extends State<PersonalInformationInputName> {
+class _PersonalInformationInputNameState
+    extends State<PersonalInformationInputName> {
   TextEditingController _nameController = TextEditingController();
 
   @override
@@ -25,8 +29,12 @@ class _PersonalInformationInputNameState extends State<PersonalInformationInputN
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
-                  // 취소 화면으로 이동 로직
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CancelMemberRegistrationScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 20),
@@ -63,15 +71,24 @@ class _PersonalInformationInputNameState extends State<PersonalInformationInputN
                 ),
               ),
               Spacer(),
+
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   child: Text('다음'),
                   onPressed: _nameController.text.isNotEmpty
                       ? () {
-                    // 다음 화면으로 이동 로직
-                    print('입력된 이름: ${_nameController.text}');
-                    Navigator.pushNamed(context, '/next_screen');
+                    // 이름 입력 후 다음 화면으로 이동
+                    print('이름: ${_nameController.text}');
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersonalInformationInputBirthday(
+                          initialName: _nameController.text,
+                        ),
+                      ),
+                    );
                   }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -94,22 +111,11 @@ class _PersonalInformationInputNameState extends State<PersonalInformationInputN
   }
 }
 
-// NextScreen 클래스 정의 (예제 화면)
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Next Screen'),
-      ),
-      body: Center(
-        child: Text('다음 화면입니다!'),
-      ),
-    );
-  }
+// main 함수
+void main() {
+  runApp(MyApp());
 }
 
-// MyApp 클래스 정의
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -118,15 +124,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PersonalInformationInputName(), // PersonalInformationInputName을 홈 화면으로 설정
-      routes: {
-        '/next_screen': (context) => NextScreen(), // '/next_screen' 경로를 정의
-      },
+      home: PersonalInformationInputName(),
     );
   }
-}
-
-// main 함수
-void main() {
-  runApp(MyApp());
 }
