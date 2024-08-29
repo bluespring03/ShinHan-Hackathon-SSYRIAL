@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '2.phonenum_authentication_start.dart'; // phonenum_authentication_start.dart 파일을 임포트
+import '1-2.cancle_member_registration.dart'; // cancle_member_registration.dart 파일을 임포트
 
 void main() {
   runApp(MyApp());
@@ -28,18 +30,29 @@ class MemberRegistrationStartScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Text(
-                  '취소하기',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  // 취소하기 버튼을 누르면 cancle_member_registration.dart 화면으로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CancelMemberRegistrationScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Text(
+                    '취소하기',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -65,7 +78,14 @@ class MemberRegistrationStartScreen extends StatelessWidget {
                       SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          // Add navigation logic here
+                          // phonenum_authentication_start.dart로 화면 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PhoneNumAuthenticationStart(), // 전화번호 인증 화면으로 이동
+                            ),
+                          );
                         },
                         child: Text(
                           '시작하기',
@@ -76,7 +96,8 @@ class MemberRegistrationStartScreen extends StatelessWidget {
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
